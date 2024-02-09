@@ -118,6 +118,54 @@ class User
         return $this;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUserName(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getTypes(): array
+    {
+        $types = $this->types;
+        // guarantee every user at least has ROLE_USER
+        $types[] = 'TYPE_USER';
+
+        return array_unique($types);
+    }
+
+    public function setTypes(array $types): self
+    {
+        $this->types = $types;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getUserPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setUserPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+
     /**
      * @return Collection<int, feedback>
      */
