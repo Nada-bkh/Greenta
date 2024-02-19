@@ -1,5 +1,5 @@
 {% block title %}
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -32,6 +32,7 @@
 </head>
 {% endblock %}
 {% block body %}
+{{ form_start(form) }}
 <main>
     <div class="container">
 
@@ -55,39 +56,38 @@
                                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
                                     <p class="text-center small">Enter your username & password to login</p>
                                 </div>
-
+                                {{ form_widget(form._token) }}
                                 <form class="row g-3 needs-validation" novalidate>
 
-                                    <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Username</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="text" name="username" class="form-control" id="yourUsername" required>
-                                            <div class="invalid-feedback">Please enter your username.</div>
-                                        </div>
+                                    <div class="col-sm-12">
+                                        {{ form_label(form.firstname)}}
+                                        {{ form_widget(form.firstname,{'attr':{'class':'form-control bg-light border-0'}}) }}
+                                        {{ form_errors(form.firstname)}}
                                     </div>
-
-                                    <div class="col-12">
-                                        <label for="yourPassword" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
-                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    <div class="col-sm-12">
+                                        {{ form_label(form.lastname)}}
+                                        {{ form_widget(form.lastname,{'attr':{'class':'form-control bg-light border-0'}}) }}
+                                        {{ form_errors(form.lastname)}}
                                     </div>
-
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                                        </div>
+                                    <div class="col-sm-12">
+                                        {{ form_label(form.email)}}
+                                        {{ form_widget(form.email,{'attr':{'type':'text','class':'form-control bg-light border-0'}}) }}
+                                        {{ form_errors(form.email)}}
                                     </div>
-                                    <input type="hidden" name="_csrf_token"
-                                           value="{{ csrf_token('authenticate') }}"
-                                    >
-                                    <button class="btn btn-primary py-3 px-4" type="submit">
-                                        Login
-                                    </button>
-                                    <div class="col-12">
-                                        <p class="small mb-0">Don't have account? <a href="{{ path('app_back_user_new') }}">Create an account</a></p>
+                                    <div class="col-sm-12">
+                                        {{ form_label(form.password)}}
+                                        {{ form_widget(form.password,{'attr':{'class':'form-control bg-light border-0'}})  }}
+                                        {{ form_errors(form.password)}}
                                     </div>
+                                    <div class="col-sm-12">
+                                        {{ form_label(form.phone)}}
+                                        {{ form_widget(form.phone,{'attr':{'class':'form-control bg-light border-0'}}) }}
+                                        {{ form_errors(form.phone)}}
+                                    </div>
+                                    <div class="col-sm-12">
+                                        {{ form_row(form.agreeTerms,{'attr': {'class': 'form-check-input'}}) }}
+                                    </div>
+                                    <button class="btn btn-primary py-3 px-4" >{{ button_label|default('Save') }}</button>
                                 </form>
 
                             </div>
@@ -115,4 +115,5 @@
 
 <!-- Template Main JS File -->
 <script src="{{ asset('backOfficeAssets/js/main.js') }}"></script>
+{{ form_end(form) }}
 {% endblock %}

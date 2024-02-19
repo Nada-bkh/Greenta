@@ -15,9 +15,9 @@
                         <div class="row g-3">
                             <form class="row g-3 needs-validation" novalidate>
                             <div class="col-sm-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="email" placeholder="Gurdian email">
-                                    <label for="email">Your Email</label>
+                                {{ form_label(form.email)}}
+                                {{ form_widget(form.email,{'attr':{'type':'text','class':'form-control bg-light border-0'}}) }}
+                                {{ form_errors(form.email)}}
                                 </div>
                             </div>
                             <div class="col-sm-12">
@@ -32,7 +32,7 @@
                             </div>
                             <div class="col-12 text-lg-center">
                                 <button class="btn btn btn-link" type="button">
-                                    <label style="color: gray">Don't have an account? <a href="{{ path('app_register') }}"> Join Us !</a></label>
+                                    <label style="color: gray">Don't have an account? <a href="{{ path('app_user_new') }}"> Join Us !</a></label>
                                 </button>
                             </div>
                             <div class="col-12 text-lg-end">

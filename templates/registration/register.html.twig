@@ -16,49 +16,55 @@
                     {{ form_start(registrationForm) }}
                     <div class="row g-3">
                         <form class="row g-3 needs-validation" novalidate>
-                    <div class="col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" id="firstname" placeholder="firstname">
-                            <label >{{ form_row(registrationForm.firstname) }}</label>
-                        </div>
-                    <div class="col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" id="lastname" placeholder="lastname">
-                            <label >{{ form_row(registrationForm.lastname) }}</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" id="email" placeholder="email">
-                            <label > {{ form_row(registrationForm.email) }}</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" id="phone" placeholder="phone">
-                            <label >{{ form_row(registrationForm.phone) }}</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" id="password" placeholder="password">
-                            <label >{{ form_row(registrationForm.plainPassword, {
-                                    label: 'Password'
-                                }) }}</label>
-                        </div>
-                    </div>
+                            <div class="col-sm-12">
+                                <div class="form-floating">
+                                    {{ form_label(registrationForm.firstname ) }}
+                                    {{ form_widget(registrationForm.firstname, {'attr': {'type':'name','class': 'form-control','id':'floatingInput', 'placeholder': 'firstname'}}) }}
+                                    {{ form_errors(registrationForm.firstname ) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-floating">
+                                    {{ form_label(registrationForm.lastname) }}
+                                    {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control', 'placeholder': 'lastname'}}) }}
+                                    {{ form_errors(registrationForm.lastname) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-floating">
+                                    {{ form_label(registrationForm.email) }}
+                                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'email'}}) }}
+                                    {{ form_errors(registrationForm.email) }}
+                                </div>
+                            </div>
 
+                            <div class="col-sm-12">
+                                <div class="form-floating">
+                                    {{ form_label(registrationForm.phone) }}
+                                    {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control', 'placeholder': 'phone'}}) }}
+                                    {{ form_errors(registrationForm.phone) }}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-floating">
+                                   {{ form_label(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}, {
+                                            label: 'Password'
+                                        }) }}
+                                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'password'}}) }}
+                                    {{ form_errors(registrationForm.plainPassword) }}
+                                </div>
+                    </div>
+                        </form>
+                </div>
+                    <div> </div>
         {{ form_row(registrationForm.agreeTerms) }}
 
                     <div class="col-12">
-                        <a class="btn btn-primary w-100" type="submit" href="{{ path('app_back') }}">{{ form_end(registrationForm) }}Register</a>
+                        <a class="btn btn-primary w-100" type="submit" href="{{ path('app_acceuil') }}">{{ form_end(registrationForm) }}Register</a>
                     </div>
-                    </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

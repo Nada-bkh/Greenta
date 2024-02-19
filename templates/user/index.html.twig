@@ -1,20 +1,73 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Users Dashboard{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <main id="main" class="main">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/nadab/OneDrive/Desktop/Greentaa/Greenta/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/nadab/OneDrive/Desktop/Greentaa/Greenta/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div class="Users">
+            <h1>Users Tables</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_back') }}">Home</a></li>
+                    <li class="breadcrumb-item">Tables</li>
+                    <li class="breadcrumb-item active">Users</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Users Table</h5>
+                            <table class="table">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Firstname</th>
+                                        <th scope="col">Lastname</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">actions</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <th scope="row">{{ user.id }}</th>
+                                            <td>{{ user.firstname }}</td>
+                                            <td>{{ user.lastname }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.password }}</td>
+                                            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                                            <td>{{ user.phone }}</td>
+                                            <td>
+                                                <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                                                <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="9">no records found</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        &copy; Copyright <strong><span>Greenta</span></strong>. All Rights Reserved
+    </div>
+</footer>
 {% endblock %}

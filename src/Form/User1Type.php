@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class RegistrationFormType extends AbstractType
+class User1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -27,12 +27,12 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('lastname',null, [
-        'constraints' => [
-            new NotBlank([
-                'message' => 'Please enter your last name!',
-            ]),
-        ],
-    ])
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter your last name!',
+                    ]),
+                ],
+            ])
             ->add('email', null, [
                 'constraints' => [
                     new NotBlank([
@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
@@ -70,7 +70,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ min }} characters',
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
