@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240204132219 extends AbstractMigration
+final class Version20240220171452 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,14 @@ final class Version20240204132219 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE feedback ADD rate VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE cour DROP mp4_path');
+        $this->addSql('ALTER TABLE quiz ADD nbrq INT NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE feedback DROP rate');
+        $this->addSql('ALTER TABLE cour ADD mp4_path LONGBLOB DEFAULT \'CURRENT_TIMESTAMP\'');
+        $this->addSql('ALTER TABLE quiz DROP nbrq');
     }
 }
