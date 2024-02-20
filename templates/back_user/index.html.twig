@@ -8,9 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
                 <th>Password</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
@@ -22,17 +20,14 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles }}</td>
                 <td>{{ user.password }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_back_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_back_user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('app_user_delete', {'id': user.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}

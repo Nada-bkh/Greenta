@@ -80,25 +80,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
+     * Returns the roles granted to the user.
+     *
+     * @return array
      */
     public function getRoles(): array
     {
-        return $this->roles ?: [];
+        return [$this->roles];
     }
     /**
-     * @see UserInterface
+     * Get the user's role.
+     *
+     * @return string|null
      */
-    public function getRole(): string
+    public function getRole(): ?string
     {
-        return (string) $this->roles;
+        return $this->roles;
     }
+
     /**
-     * @see UserInterface
+     * Set the user's role.
+     *
+     * @param string|null $roles
+     * @return self
      */
-    public function setRole(string $role): self
+    public function setRole(?string $roles): self
     {
-        $this->roles = $role;
+        $this->roles = $roles;
 
         return $this;
     }

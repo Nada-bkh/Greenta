@@ -89,15 +89,15 @@
                 </div>
             </div>
             <a href="" class="nav-item nav-link">Charity</a>
-
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
                 <div class="dropdown-menu bg-light m-0">
-                    <a href="" class="dropdown-item">Profile Settings</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="dropdown-item">Profile Settings</a>
                     <a href="" class="dropdown-item">Feedback</a>
                     <a href="{{ path('app_home') }}" class="dropdown-item">Log out</a>
                 </div>
             </div>
+
         </div>
     </div>
 </nav>

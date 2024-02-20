@@ -33,6 +33,7 @@ class BackUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRole('ROLE_ADMIN');
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
