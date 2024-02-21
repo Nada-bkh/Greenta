@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+
+{{ form_label(form.picture, 'picture') }}
+{{ form_widget(form.picture, {'attr': {'class': 'form-control-file','placeholder':'upload photos'}}) }}
+{{ form_errors(form.picture) }}
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

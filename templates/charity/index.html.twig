@@ -1,0 +1,41 @@
+{% extends 'baseBack.html.twig' %}
+{% block body %}
+
+	<!-- Service Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+				<p class="fs-5 fw-bold text-primary">Our Charities</p>
+				<h1 class="display-5 mb-5">Charities That We Offer For You</h1>
+			</div>
+			<div class="row g-4">
+				{% for charity in charities %}
+					<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
+						<div class="service-item rounded d-flex h-100">
+							<div
+								class="service-img rounded">
+								{# Display the charity image if imagePath property exists #}
+
+								{% dump(charity.picture) %}
+								<img{{charity.nameOfCharity}}</h4 src="{{asset('/uploads/'~charity.picture)}}" </div> <div class="service-text rounded p-5"> <div class="btn-square rounded-circle mx-auto mb-3"> {# You can add the charity icon here if available #} </div> <h4 class="mb-3">>
+									{% dump(charity.picture) %}
+
+
+									<img src="{{ asset('uploads/' ~ charity.picture) }}" style="width: 100%; height: 100%;" alt="charity pic" class="img-fluid">
+									<p class="mb-4">Amount Donated:
+										{{ charity.amountDonated }}</p>
+
+									<p class="mb-4">Last Donation Date:
+										{{ charity.lastDate|date('Y-m-d') }}</p>
+									<a class="btn btn-sm" href="{{ path('app_donation_new')}}">
+										<i class="fa fa-plus text-primary me-2"></i>Donate</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<!-- Service End -->
+
+	{% endblock %}
