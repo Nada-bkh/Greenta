@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/donation/back')]
 class DonationBackController extends AbstractController
 {
-    #[Route('/', name: 'app_donation_back_index', methods: ['GET'])]
+    #[Route('/index', name: 'app_donation_back_index', methods: ['GET'])]
     public function index(DonationRepository $donationRepository): Response
     {
         return $this->render('donation_back/index.html.twig', [

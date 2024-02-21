@@ -6,15 +6,16 @@
 		<div class="container">
 			<div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
 				<p class="fs-5 fw-bold text-primary">Our Charities</p>
+				<hr>
+				<hr>
 				<h1 class="display-5 mb-5">Charities That We Offer For You</h1>
 			</div>
 			<div class="row g-4">
 				{% for charity in charities %}
 					<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ loop.index }}">
 						<div class="service-item rounded d-flex h-100">
-							<div
-								class="service-img rounded">
-								{# Display the charity image if imagePath property exists #}
+							<div class="service-img rounded">
+
 								{% dump(charity.picture) %}
 
 
@@ -38,5 +39,4 @@
 		</div>
 	</div>
 	<!-- Service End -->
-
 {% endblock %}

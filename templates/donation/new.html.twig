@@ -48,7 +48,7 @@
 							{{ form_errors(form.amount) }}
 						</div>
 						<div class="text-center">
-							{{ form_widget(form.save, {'label': 'Donate', 'attr': {'class': 'btn btn-primary py-3 px-4', 'id': 'save-button'}}) }}
+							{{ form_widget(form.save, {'label': 'Donate', 'attr': {'class': 'btn btn-primary py-3 px-4', 'id': 'save-button','href': path('app_charity_front_index')}}) }}
 							<a href="{{ path('app_charity_front_index') }}" class="btn btn-secondary">Back to List</a>
 						</div>
 						{{ form_end(form) }}

@@ -1,13 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
-{% block title %}Edit Donation{% endblock %}
+{% block title %}
+	<div style="text-align: center;">
+		<h1>Edit Donation</h1>
+	</div>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Donation</h1>
+	<h1>Edit Donation</h1>
 
-    {{ include('donation_back/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('donation_back/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_donation_back_index') }}">back to list</a>
 
-    {{ include('donation_back/_delete_form.html.twig') }}
 {% endblock %}
