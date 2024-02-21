@@ -21,7 +21,6 @@ class BackController extends AbstractController
             ]);
         }
 
-        // If not, redirect to the access denied page
         return $this->redirectToRoute('app_access_denied');
 
     }

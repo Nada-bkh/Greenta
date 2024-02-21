@@ -29,7 +29,9 @@ class BackUserController extends AbstractController
     public function new(Request $request,UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $managerRegistry): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user,[
+            'attr'=>['novalidate'=>'novalidate']
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,7 +46,7 @@ class BackUserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_login_back', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back_user/_form.html.twig', [
