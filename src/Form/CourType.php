@@ -30,8 +30,10 @@ class CourType extends AbstractType
             ->add('categorie', ChoiceType::class, [
                 'choices' => [
                     
+                    'nature' => 'nature',
                     'Biodiversity' => 'Biodiversity',
                     'sensitization' => 'sensitization',
+
                 
                 ],
             ])
@@ -41,7 +43,7 @@ class CourType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k', // Adjust maximum file size if needed
+                        'maxSize' => '10024k', // Adjust maximum file size if needed
                         'mimeTypes' => [
                             'application/pdf',
                         ],

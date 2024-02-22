@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
@@ -14,12 +15,15 @@ class Question
     private ?int $id = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: 'Please enter question')]
     private ?string $question = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: 'Please enter response')]
     private ?string $reponse = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Please enter note')]
     private ?int $note = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]

@@ -6,6 +6,8 @@ use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: QuizRepository::class)]
 class Quiz
@@ -16,17 +18,21 @@ class Quiz
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter Title')]
     private ?string $titre = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Please enter value')]
     private ?int $duree = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Please enter note')]
     private ?int $note = null;
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Please enter value')]
     private ?int $nbrq = null;
 
     #[ORM\ManyToOne(inversedBy: 'quizzes')]

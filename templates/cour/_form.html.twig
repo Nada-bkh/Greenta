@@ -1,12 +1,18 @@
-{{ form_start(form, {'attr': {'class': 'form-container'}}) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-container', 'id': 'FormC'}}) }}
     <div class="form-group">
         {{ form_label(form.titre) }}
-        {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.titre, {'attr': {'class': 'form-control','id': 'titre'}}) }}
+      {% if form_errors(form.titre) %}
+            <span class="text-danger">{{ form_errors(form.titre) }}</span>
+        {% endif %}
     </div>
 
     <div class="form-group">
         {{ form_label(form.description) }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+        {{ form_widget(form.description, {'attr': {'id': 'titre','class': 'form-control', 'rows': '5'}}) }}
+           {% if form_errors(form.description) %}
+            <span class="text-danger">{{ form_errors(form.description) }}</span>
+        {% endif %}
     </div>
 
     <div class="form-group">
@@ -21,6 +27,10 @@
      <div class="form-group">
         {{ form_label(form.pdfpath) }}
         {{ form_widget(form.pdfpath, {'attr': {'class': 'form-control'}}) }}
+         {% if form_errors(form.pdfpath) %}
+            <span class="text-danger">{{ form_errors(form.pdfpath) }}</span>
+        {% endif %}
+        
     </div>
 
     <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>

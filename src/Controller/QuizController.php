@@ -83,6 +83,6 @@ class QuizController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_quiz_index', [$quiz->getCourid()->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_quiz_index', ['id'=>$quiz->getCourid()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

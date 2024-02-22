@@ -6,6 +6,7 @@ use App\Repository\CourRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CourRepository::class)]
 class Cour
@@ -16,9 +17,12 @@ class Cour
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter Title')]
+   
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter description')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -34,7 +38,10 @@ class Cour
     private Collection $quizzes;
 
     #[ORM\Column(length: 255)]
+
     private ?string $pdfpath = null;
+   
+
 
     public function __construct()
     {

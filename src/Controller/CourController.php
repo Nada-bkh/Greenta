@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cour;
 use App\Form\CourType;
+use App\Form\CourEditType;
 use App\Repository\CourRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Form\FormError;
 
 #[Route('/cour')]
 class CourController extends AbstractController
@@ -103,14 +105,21 @@ return $response;
     #[Route('/{id}/edit', name: 'app_cour_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Cour $cour, EntityManagerInterface $entityManager): Response
     {
+        $date = $cour->getCreatedAt();
         $form = $this->createForm(CourType::class, $cour);
         $form->handleRequest($request);
-        $date = $cour->getCreatedAt();
+       
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $cour->setCreatedAt($date);
-            $entityManager->flush();
+            if ($form->get('titre')->getData() === null) {
+                // Add a custom error message for a blank title
+                $form->get('titre')->addError(new FormError('Title cannot be blank.'));
+            } else {
+                $cour->setCreatedAt($date);
+                $entityManager->flush();
+               
+            }
 
             return $this->redirectToRoute('app_cour_index_back', [], Response::HTTP_SEE_OTHER);
         }

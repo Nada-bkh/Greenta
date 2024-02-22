@@ -83,13 +83,17 @@
                 <td>{{ cour.createdAt ? cour.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ cour.categorie }}</td>
                 <td class="actions">
-                    <a href="{{ path('app_cour_show', {'id': cour.id}) }}">show</a>
-                    <a href="{{ path('app_cour_edit', {'id': cour.id}) }}">edit</a>
+                  <button onclick="window.location='{{ path('app_cour_show', {'id': cour.id}) }}'">Show</button>
+                  <button onclick="window.location='{{ path('app_cour_edit', {'id': cour.id}) }}'">Edit</button>
+
                     <td>
-                    {% if cour.quizzes|length != 0 %}
-                    <a href="{{ path('app_quiz_index', {'id': cour.id}) }}">View Quizes</a>
-                    {% endif %}
-                    <a href="{{ path('app_quiz_new', {'id': cour.id}) }}">Add Quiz</a>
+                 
+                   {% if cour.quizzes|length != 0 %}
+    <button onclick="window.location='{{ path('app_quiz_index', {'id': cour.id}) }}'">View Quizzes</button>
+{% endif %}
+
+                    <button onclick="window.location='{{ path('app_quiz_new', {'id': cour.id}) }}'">Add Quiz</button>
+
                     </td>
                 </td>
             </tr>
