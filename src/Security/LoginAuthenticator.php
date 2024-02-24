@@ -113,13 +113,19 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator implements Passw
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+
+        if ($user instanceof User && $user->getRoles() && in_array('ROLE_ADMIN', $user->getRoles())) {
+            // Redirect admin users to home_back
+            return new RedirectResponse($this->urlGenerator->generate('app_back'));
+        }
+
+        // For other users or cases, use the default behavior
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
         return new RedirectResponse($this->urlGenerator->generate('app_acceuil'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
