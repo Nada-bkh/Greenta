@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Donation;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -10,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Type;
 
 class DonationType extends AbstractType
@@ -19,7 +21,9 @@ class DonationType extends AbstractType
         $builder
             ->add('address')
             //->add('date')
-            ->add('firstName')
+            ->add(
+                'firstName'
+            )
             ->add('lastName')
             ->add('phoneNumber', IntegerType::class, [
                 'constraints' => [

@@ -69,7 +69,7 @@ class CharityFrontController extends AbstractController
 
 
         return $this->render('charity_front/show.html.twig', [
-            'charities' => $charities,
+            'charity' => $charities,
         ]);
     }
 

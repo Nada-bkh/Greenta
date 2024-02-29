@@ -41,16 +41,23 @@ class CharityType extends AbstractType
                         'type' => 'numeric',
                     ]),
                 ],
+
             ])
             ->add('picture', FileType::class, [
                 'mapped' => false,
                 'required' => false,
 
+
             ])
             ->add('last_date', DateType::class, [
                 'widget' => 'single_text',
-                'html5' => false,
-                'format' => 'yyyy-MM-dd', // Specify the date format
+                'html5' => true, // Render as HTML5 date input
+                'format' => 'yyyy-MM-dd', // Specify the date format,
+                'data' => new \DateTime(), // Set default value to current date
+                'attr' => [
+                    'min' => (new \DateTime())->format('Y-m-d'),
+
+                ]
             ]);
     }
 

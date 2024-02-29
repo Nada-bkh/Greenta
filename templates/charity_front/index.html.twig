@@ -27,10 +27,10 @@
 								<p class="mb-4">Amount needed:
 									{{ charity.amountDonated }}</p>
 
-								<p class="mb-4">Last Donation Date:
+								<p class="mb-4">Last date of donation:
 									{{ charity.lastDate|date('Y-m-d') }}</p>
-								<a class="btn btn-sm" href="{{ path('app_donation_new')}}">
-									<i class="fa fa-plus text-primary me-2"></i>Donate</a>
+								<a class="btn btn-sm" href="{{ path('app_charity_front_show', {id: charity.id})}}">
+									<i class="fa fa-plus text-primary me-2"></i>show more</a>
 							</div>
 						</div>
 					</div>

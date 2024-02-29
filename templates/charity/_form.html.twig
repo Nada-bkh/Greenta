@@ -20,6 +20,9 @@
 	.form-group {
 		margin-bottom: 15px;
 	}
+	.error-message {
+		color: #8B0000;
+	}
 </style>
 
 <div class="container-fluid" data-parallax="scroll" data-image-src="assets/img/carousel-2.jpg">
@@ -29,29 +32,32 @@
 				<div class="bg-white rounded p-4 p-sm-5 wow fadeIn" data-wow-delay="0.5s">
 					<div class="form-group">
 						{{ form_label(form.name_of_charity, 'Charity Name', {'label_attr': {'class': 'form-label'}}) }}
-						{{ form_widget(form.name_of_charity, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Your placeholder text'}}) }}
-						{{ form_errors(form.name_of_charity) }}
+						{{ form_widget(form.name_of_charity, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Name of charity'}}) }}
+						{{form_errors(form.name_of_charity)}}
 					</div>
 
 					<div class="form-group">
 						{{ form_label(form.last_date, 'Last Date', {'label_attr': {'class': 'form-label'}}) }}
-						{{ form_widget(form.last_date, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Your placeholder text'}}) }}
-						{{ form_errors(form.last_date) }}
+						{{ form_widget(form.last_date, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Last Date','type': 'date'}}) }}
+						{{form_errors(form.last_date)}}
 					</div>
 
 					<div class="form-group">
 						{{ form_label(form.picture, 'Picture', {'label_attr': {'class': 'form-label'}}) }}
 						{{ form_widget(form.picture, {'attr': {'class': 'form-control-file form-control-sm bg-light border-0', 'placeholder': 'Upload photo'}}) }}
-						{{ form_errors(form.picture) }}
+						{{ form_errors(form.picture, {'attr': {'class': 'error-message'}}) }}
 					</div>
 
 					<div class="form-group">
-						{{ form_label(form.amount_donated, 'Amount Donated', {'label_attr': {'class': 'form-label'}}) }}
-						{{ form_widget(form.amount_donated, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Your placeholder text'}}) }}
-						{{ form_errors(form.amount_donated) }}
+						{{ form_label(form.amount_donated, 'Amount needed', {'label_attr': {'class': 'form-label'}}) }}
+						{{ form_widget(form.amount_donated, {'attr': {'class': 'form-control bg-light border-0', 'placeholder': 'Amount Needer'}}) }}
+						{{form_errors(form.amount_donated)}}
 					</div>
 
-					<button type="submit" class="btn btn-primary py-3 px-4" id="save-button">Add</button>
+
+					<button class="btn btn-primary py-3 px-4">{{button_label|default('save')}}</button>
+
+
 				</div>
 			</div>
 		</div>

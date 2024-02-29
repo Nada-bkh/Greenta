@@ -92,9 +92,13 @@ class CharityController extends AbstractController
             return $this->redirectToRoute('app_charity_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('charity/edit.html.twig', [
+        // Set the isEdit variable according to your logic
+        $isEdit = true;
+
+        return $this->render('charity/edit.html.twig', [
             'charity' => $charity,
-            'form' => $form,
+            'form' => $form->createView(),
+            'isEdit' => $isEdit, // Pass the isEdit variable to the template
         ]);
     }
 
