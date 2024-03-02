@@ -1,17 +1,39 @@
-{% extends 'baseFront.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}
-    Apply for a job
-{% endblock %}
+{% block title %}Application index{% endblock %}
 
 {% block body %}
-    <h1>Apply for a job</h1>
+    <h1>Application index</h1>
 
-    {{ form_start(form) }}
-        {{ form_row(form.firstname) }}
-        {{ form_row(form.lastname) }}
-        {{ form_row(form.skills) }}
-        {{ form_row(form.experience) }}
-        {{ form_row(form.apply) }}
-    {{ form_end(form) }}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+            <tr>
+                <td>{{ application.id }}</td>
+                <td>{{ application.firstname }}</td>
+                <td>{{ application.lastname }}</td>
+                <td>{{ application.email }}</td>
+                <td>
+                    <a href="{{ path('app_application_show', {'id': application.id}) }}">show</a>
+                    <a href="{{ path('app_application_edit', {'id': application.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_application_new') }}">Create new</a>
 {% endblock %}

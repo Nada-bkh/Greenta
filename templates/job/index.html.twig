@@ -1,36 +1,45 @@
-{% extends 'baseFront.html.twig' %}
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Job index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Job index</h1>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+     <div class="container">
+        <h1 class="my-4">Job index</h1>
 
-<div class="example-wrapper">
-    <table class="table">
-  <thead>
-    <tr>
-      
-      <th scope="col">title</th>
-      <th scope="col">role</th>
-      <th scope="col">org_name</th>
-      <th scope="col">start_date</th>
-      <th  scope="col">apply</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for view in v %}
-    <tr>
-      <td>{{ view.title }}</td>
-      <td>{{ view.role }}</td>
-      <td>{{ view.OrgName }}</td>
-      <td>{{ view.StartDate }}</td>
-      <td><a href="{{ path('addApp', {'id': view.id}) }}">apply</a></td>
-      
-      
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-</div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Organisation</th>
+              <th>Picture</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Startdate</th>
+              <th>actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for job in jobs %}
+              <tr>
+                  <td style="position: relative;">{{ job.organisation }}</td>
+                  <td style="position: absolute; left: 60px;"><img src="{{ asset('uploads/' ~ job.picture) }}" width="32" height="32"></td>
+                  <td>{{ job.title }}</td>
+                  <td>{{ job.description }}</td>
+                  <td>{{ job.startdate ? job.startdate|date('Y-m-d') : '' }}</td>
+                  <td>
+                      <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a>
+                      <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a>
+                  </td>
+              </tr>
+          {% else %}
+              <tr>
+                  <td colspan="6">no records found</td>
+              </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+        <a href="{{ path('app_job_new') }}" class="btn btn-primary">Create new</a>
+      </div>
 {% endblock %}

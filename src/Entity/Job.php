@@ -5,10 +5,8 @@ namespace App\Entity;
 use App\Repository\JobRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Util\ClassUtils;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: JobRepository::class)]
 class Job
@@ -19,49 +17,43 @@ class Job
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The  title field cannot be blank.")]
-    #[Assert\Length(
-        min: 20,
-        max: 255,
-        minMessage: "The  job's title must be at least {{ limit }} characters long.",
-        maxMessage: "The   job's title cannot be longer than {{ limit }} characters."
-    )]
+    private ?string $organisation = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The  Role field cannot be blank.")]
-    #[Assert\Length(
-        min: 100,
-        max: 255,
-        minMessage: "The  job's Role must be at least {{ limit }} characters long.",
-        maxMessage: "The   job's Role cannot be longer than {{ limit }} characters."
-    )]
-    private ?string $role = null;
+    private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "The  Organisation field cannot be blank.")]
-    #[Assert\Length(
-        min: 3,
-        max: 255,
-        minMessage: "The  Organisation name  must be at least {{ limit }} characters long.",
-        maxMessage: "The   Organisation name cannot be longer than {{ limit }} characters."
-    )]
-    private ?string $org_name = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $startdate = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $start_date = null;
+    #[ORM\OneToMany(mappedBy: 'jobtitle', targetEntity: Application::class)]
+    private Collection $jobapp;
 
-    #[ORM\OneToMany(targetEntity: Application::class, mappedBy: 'jobid')]
-    private Collection $applications;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
 
     public function __construct()
     {
-        $this->applications = new ArrayCollection();
+        $this->jobapp = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getOrganisation(): ?string
+    {
+        return $this->organisation;
+    }
+
+    public function setOrganisation(string $organisation): static
+    {
+        $this->organisation = $organisation;
+
+        return $this;
     }
 
     public function getTitle(): ?string
@@ -76,38 +68,26 @@ class Job
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getDescription(): ?string
     {
-        return $this->role;
+        return $this->description;
     }
 
-    public function setRole(string $role): static
+    public function setDescription(string $description): static
     {
-        $this->role = $role;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getOrgName(): ?string
+    public function getStartdate(): ?\DateTimeInterface
     {
-        return $this->org_name;
+        return $this->startdate;
     }
 
-    public function setOrgName(string $org_name): static
+    public function setStartdate(\DateTimeInterface $startdate): static
     {
-        $this->org_name = $org_name;
-
-        return $this;
-    }
-
-    public function getStartDate(): ?string
-    {
-        return $this->start_date;
-    }
-
-    public function setStartDate(string $start_date): static
-    {
-        $this->start_date = $start_date;
+        $this->startdate = $startdate;
 
         return $this;
     }
@@ -115,29 +95,41 @@ class Job
     /**
      * @return Collection<int, Application>
      */
-    public function getApplications(): Collection
+    public function getJobapp(): Collection
     {
-        return $this->applications;
+        return $this->jobapp;
     }
 
-    public function addApplication(Application $application): static
+    public function addJobapp(Application $jobapp): static
     {
-        if (!$this->applications->contains($application)) {
-            $this->applications->add($application);
-            $application->setJobid($this);
+        if (!$this->jobapp->contains($jobapp)) {
+            $this->jobapp->add($jobapp);
+            $jobapp->setJobtitle($this);
         }
 
         return $this;
     }
 
-    public function removeApplication(Application $application): static
+    public function removeJobapp(Application $jobapp): static
     {
-        if ($this->applications->removeElement($application)) {
+        if ($this->jobapp->removeElement($jobapp)) {
             // set the owning side to null (unless already changed)
-            if ($application->getJobid() === $this) {
-                $application->setJobid(null);
+            if ($jobapp->getJobtitle() === $this) {
+                $jobapp->setJobtitle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }

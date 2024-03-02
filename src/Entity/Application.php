@@ -20,13 +20,10 @@ class Application
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $skills = null;
+    private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $experience = null;
-
-    #[ORM\ManyToOne(inversedBy: 'applications')]
-    private ?job $jobid = null;
+    #[ORM\ManyToOne(inversedBy: 'jobapp')]
+    private ?job $jobtitle = null;
 
     public function getId(): ?int
     {
@@ -57,38 +54,26 @@ class Application
         return $this;
     }
 
-    public function getSkills(): ?string
+    public function getEmail(): ?string
     {
-        return $this->skills;
+        return $this->email;
     }
 
-    public function setSkills(string $skills): static
+    public function setEmail(string $email): static
     {
-        $this->skills = $skills;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getExperience(): ?string
+    public function getJobtitle(): ?job
     {
-        return $this->experience;
+        return $this->jobtitle;
     }
 
-    public function setExperience(string $experience): static
+    public function setJobtitle(?job $jobtitle): static
     {
-        $this->experience = $experience;
-
-        return $this;
-    }
-
-    public function getJobid(): ?job
-    {
-        return $this->jobid;
-    }
-
-    public function setJobid(?job $jobid): static
-    {
-        $this->jobid = $jobid;
+        $this->jobtitle = $jobtitle;
 
         return $this;
     }

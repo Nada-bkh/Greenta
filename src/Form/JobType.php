@@ -6,20 +6,21 @@ use App\Entity\Job;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class JobType extends AbstractType
-
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('organisation')
             ->add('title')
-            ->add('role', TextareaType::class)
-            ->add('org_name')
-            ->add('start_date')
-            ->add('add', SubmitType::class)
+            ->add('description')
+            ->add('startdate')
+            ->add('picture', FileType::class,[
+                "mapped"=>false,
+                "required"=>false,
+            ])
         ;
     }
 
