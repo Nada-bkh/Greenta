@@ -25,7 +25,7 @@ class Epreuve
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?quiz $quizid = null;
+    private ?Quiz $quizid = null;
 
     public function getId(): ?int
     {
@@ -68,12 +68,12 @@ class Epreuve
         return $this;
     }
 
-    public function getQuizid(): ?quiz
+    public function getQuizid(): ?Quiz
     {
         return $this->quizid;
     }
 
-    public function setQuizid(?quiz $quizid): static
+    public function setQuizid(?Quiz $quizid): static
     {
         $this->quizid = $quizid;
 

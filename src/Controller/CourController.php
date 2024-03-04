@@ -48,11 +48,10 @@ class CourController extends AbstractController
             'cours' => $courRepository->findByNiveau($filtre),
         ]);
     }
-    
     #[Route('/filtreCateg', name: 'app_cour_filtre_categ', methods: ['GET' ,'POST'])]
     public function filtreC(CourRepository $courRepository,Request $request): Response
     {
-        $filtre=$request->request->get('filtre_categ');
+        $filtre=$request->request->get('filtre_adresse');
         
         return $this->render('cour/indexBack.html.twig', [
             'cours' => $courRepository->findByCateg($filtre),

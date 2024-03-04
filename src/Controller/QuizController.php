@@ -12,22 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 #[Route('/quiz')]
 class QuizController extends AbstractController
 {
-    #[Route('/Epreuve/Succes', name: 'app_quiz_succes', methods: ['GET'])]
-    public function Succes(Request $request): Response
-    {
-        return $this->render('quiz/Succes.html.twig');
-    }
-
+    
     #[Route('/Epreuve/fail', name: 'app_quiz_fail', methods: ['GET'])]
     public function fail(Request $request): Response
     {
         return $this->render('quiz/fail.html.twig');
     }
-
     #[Route('/quizes/{id}', name: 'app_quiz_index', methods: ['GET'])]
     public function index(QuizRepository $quizRepository,Cour $cour): Response
     {
@@ -35,7 +31,7 @@ class QuizController extends AbstractController
             'quizzes' => $cour->getQuizzes(),
         ]);
     }
-
+   
     #[Route('/quizesFront/{id}', name: 'app_quiz_index_front', methods: ['GET'])]
     public function indexFront(QuizRepository $quizRepository,Cour $cour): Response
     {
@@ -68,7 +64,16 @@ class QuizController extends AbstractController
             'form' => $form,
         ]);
     }
+   
+    #[Route('/Epreuve/Succes/{id}', name: 'app_quiz_succes', methods: ['GET'])]
+    public function Succes(Epreuve $epreuve,Request $request): Response
+    {
 
+        return $this->render('quiz/Succes.html.twig', [
+            'epreuve' => $epreuve,
+        ]);
+    }
+   
     #[Route('/{id}', name: 'app_quiz_show', methods: ['GET'])]
     public function show(Quiz $quiz): Response
     {
@@ -76,7 +81,6 @@ class QuizController extends AbstractController
             'quiz' => $quiz,
         ]);
     }
-    
     #[Route('/{id}/takequiz', name: 'app_quiz_display', methods: ['GET','POST'])]
     public function DisplayFront(Request $request, Quiz $quiz,EntityManagerInterface $entityManager): Response
     {
@@ -105,7 +109,7 @@ class QuizController extends AbstractController
             $epreuve->setDateP($d);
             $entityManager->persist($epreuve);
             $entityManager->flush();
-            return $this->redirectToRoute('app_quiz_succes', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_quiz_succes', ['id'=>$epreuve->getId()], Response::HTTP_SEE_OTHER);
            }
            else{
             $d=new \DateTimeImmutable();
@@ -143,7 +147,30 @@ class QuizController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/Epreuve/pdf/{id}', name: 'app_pdf_epreuve', methods: ['GET','POST'])]
+    public function pdfEpreuve(Epreuve $epreuve,Request $request): Response
+    {
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
 
+        $dompdf = new Dompdf($options);
+        $html = $this->renderView('quiz/pdfepreuve.html.twig', [
+            'epreuve' => $epreuve,
+        ]);
+        $dompdf->loadHtml($html);
+
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to browser (inline view)
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+        ]);
+
+    }
     #[Route('/{id}', name: 'app_quiz_delete', methods: ['POST'])]
     public function delete(Request $request, Quiz $quiz, EntityManagerInterface $entityManager): Response
     {
@@ -155,5 +182,6 @@ class QuizController extends AbstractController
 
         return $this->redirectToRoute('app_quiz_index', ['id'=>$courid], Response::HTTP_SEE_OTHER);
     }
+  
  
 }

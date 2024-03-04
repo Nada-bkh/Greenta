@@ -6833,6 +6833,12 @@
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
+    <service id=".service_locator.D3DMPZ5" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="epreuve" type="service_closure" id=".errored..service_locator.D3DMPZ5.App\Entity\Epreuve"/>
+      </argument>
+    </service>
     <service id=".service_locator.by1YEBl" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -6846,7 +6852,7 @@
         <argument key="quiz" type="service_closure" id=".errored..service_locator.upn6fXR.App\Entity\Quiz"/>
       </argument>
     </service>
-    <service id=".service_locator.aCUfDad" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.Lkg9FmN" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\CourController::PdfShow" type="service_closure" id=".service_locator.4vztcD7"/>
@@ -6866,11 +6872,13 @@
         <argument key="App\Controller\QuestionController::new" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuestionController::show" type="service_closure" id=".service_locator.WSbH3C6"/>
         <argument key="App\Controller\QuizController::DisplayFront" type="service_closure" id=".service_locator.upn6fXR"/>
+        <argument key="App\Controller\QuizController::Succes" type="service_closure" id=".service_locator.D3DMPZ5"/>
         <argument key="App\Controller\QuizController::delete" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuizController::edit" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuizController::index" type="service_closure" id=".service_locator.s44T0Ti"/>
         <argument key="App\Controller\QuizController::indexFront" type="service_closure" id=".service_locator.s44T0Ti"/>
         <argument key="App\Controller\QuizController::new" type="service_closure" id=".service_locator.7I1SZ7H"/>
+        <argument key="App\Controller\QuizController::pdfEpreuve" type="service_closure" id=".service_locator.D3DMPZ5"/>
         <argument key="App\Controller\QuizController::show" type="service_closure" id=".service_locator.by1YEBl"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
@@ -6893,11 +6901,13 @@
         <argument key="App\Controller\QuestionController:new" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuestionController:show" type="service_closure" id=".service_locator.WSbH3C6"/>
         <argument key="App\Controller\QuizController:DisplayFront" type="service_closure" id=".service_locator.upn6fXR"/>
+        <argument key="App\Controller\QuizController:Succes" type="service_closure" id=".service_locator.D3DMPZ5"/>
         <argument key="App\Controller\QuizController:delete" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuizController:edit" type="service_closure" id=".service_locator.upn6fXR"/>
         <argument key="App\Controller\QuizController:index" type="service_closure" id=".service_locator.s44T0Ti"/>
         <argument key="App\Controller\QuizController:indexFront" type="service_closure" id=".service_locator.s44T0Ti"/>
         <argument key="App\Controller\QuizController:new" type="service_closure" id=".service_locator.7I1SZ7H"/>
+        <argument key="App\Controller\QuizController:pdfEpreuve" type="service_closure" id=".service_locator.D3DMPZ5"/>
         <argument key="App\Controller\QuizController:show" type="service_closure" id=".service_locator.by1YEBl"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.xUrKPVU"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.xUrKPVU"/>
@@ -7574,12 +7584,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.aCUfDad"/>
+      <argument type="service" id=".service_locator.Lkg9FmN"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.aCUfDad"/>
+      <argument type="service" id=".service_locator.Lkg9FmN"/>
     </service>
     <service id="debug.traced.messenger.bus.default.inner" class="Symfony\Component\Messenger\MessageBus">
       <argument type="iterator">
@@ -7605,6 +7615,7 @@
     <service id=".errored..service_locator.qqCANCy.App\Entity\Question" class="App\Entity\Question"/>
     <service id=".errored..service_locator.s44T0Ti.App\Entity\Cour" class="App\Entity\Cour"/>
     <service id=".errored..service_locator.7I1SZ7H.App\Entity\Cour" class="App\Entity\Cour"/>
+    <service id=".errored..service_locator.D3DMPZ5.App\Entity\Epreuve" class="App\Entity\Epreuve"/>
     <service id=".errored..service_locator.by1YEBl.App\Entity\Quiz" class="App\Entity\Quiz"/>
     <service id=".errored..service_locator.upn6fXR.App\Entity\Quiz" class="App\Entity\Quiz"/>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
@@ -8652,7 +8663,7 @@
     <service id="sensio_framework_extra.security.expression_language" alias="sensio_framework_extra.security.expression_language.default"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.gSv9zYw" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.aCUfDad"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.Lkg9FmN"/>
     <service id="session" alias=".session.do-not-use" public="true">
       <deprecated package="symfony/framework-bundle" version="5.3">The "%alias_id%" service and "SessionInterface" alias are deprecated, use "$requestStack-&gt;getSession()" instead.</deprecated>
     </service>
@@ -8680,7 +8691,7 @@
     <service id=".service_locator.1dKZxZs" alias=".service_locator.s44T0Ti"/>
     <service id=".service_locator.BM1Gbfy" alias=".service_locator.7I1SZ7H"/>
     <service id=".service_locator.8s3Eo5t" alias=".service_locator.upn6fXR"/>
-    <service id=".service_locator.Ux9g4Zl" alias=".service_locator.aCUfDad"/>
+    <service id=".service_locator.Hle04Om" alias=".service_locator.Lkg9FmN"/>
     <service id=".service_locator.wKF4yn1" alias=".service_locator.19_mNxd"/>
     <service id=".service_locator.H7L_t1A" alias=".service_locator.Kc63Qpd"/>
     <service id=".service_locator.A4k6Zds" alias=".service_locator.YXH_UHb"/>
@@ -8718,6 +8729,7 @@
     <service id=".service_locator.K6TbbBY" alias=".service_locator.qqCANCy"/>
     <service id=".service_locator.IdPgu8E" alias=".service_locator.s44T0Ti"/>
     <service id=".service_locator.577Tx95" alias=".service_locator.7I1SZ7H"/>
+    <service id=".service_locator.dSF3WsG" alias=".service_locator.D3DMPZ5"/>
     <service id=".service_locator.CY039cF" alias=".service_locator.by1YEBl"/>
     <service id=".service_locator.yhjWHp9" alias=".service_locator.upn6fXR"/>
     <service id=".service_locator.A740LBW" alias=".service_locator.mx0UMmY"/>

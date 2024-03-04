@@ -2,8 +2,6 @@
 
 {% block title %}Quiz: {{ quiz.titre }}{% endblock %}
 
-
-
 {% block body %}
 <style>
 .container {
@@ -45,22 +43,54 @@ input[type="text"] {
 .btn-primary:hover {
     background-color: #0056b3;
 }
-
 </style>
-    <div class="container">
+
+<div class="container">
     <center>
         <h1>{{ quiz.titre }}</h1>
-        </center>
-        <form  method="POST">
-            {% for question in questions %}
-                <div class="question">
-                    <h2>{{ question.question }}</h2>
-                    <div class="response">
-                        <input type="text" id="response{{ loop.index }}" name="answers[{{ question.id }}]" placeholder="Your answer" required>
-                    </div>
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Submit Quiz</button>
-        </form>
-    </div>
+    </center>
+    <!-- Add a div to display the timer -->
+    <center>
+    Time left : <div width="150" height="150" id="timer"></div></center>
+    <form id="quizForm" method="POST">
+        {% for question in questions %}
+        <div class="question">
+            <h2>{{ question.question }}</h2>
+            <div class="response">
+                <input type="text" id="response{{ loop.index }}" name="answers[{{ question.id }}]" placeholder="Your answer" required>
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Submit Quiz</button>
+    </form>
+</div>
+
+<script>
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        var intervalId = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                // Stop the timer
+                clearInterval(intervalId);
+                // Submit the quiz form when timer ends
+                document.getElementById("quizForm").submit();
+            }
+        }, 1000);
+    }
+    
+    window.onload = function () {
+        var minutes = 0.5; // Adjust the timer duration as needed
+        var display = document.querySelector('#timer');
+        startTimer(minutes * 60, display);
+    };
+</script>
+
 {% endblock %}

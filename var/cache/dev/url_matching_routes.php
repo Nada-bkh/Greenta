@@ -21,7 +21,6 @@ return [
         '/back/login' => [[['_route' => 'app_login_back', '_controller' => 'App\\Controller\\LoginBackController::index'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\LoginController::index'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\LoginController::logout'], null, null, null, false, false, null]],
-        '/quiz/Epreuve/Succes' => [[['_route' => 'app_quiz_succes', '_controller' => 'App\\Controller\\QuizController::Succes'], null, ['GET' => 0], null, false, false, null]],
         '/quiz/Epreuve/fail' => [[['_route' => 'app_quiz_fail', '_controller' => 'App\\Controller\\QuizController::fail'], null, ['GET' => 0], null, false, false, null]],
         '/_profiler' => [[['_route' => '_profiler_home', '_controller' => 'web_profiler.controller.profiler::homeAction'], null, null, null, true, false, null]],
         '/_profiler/search' => [[['_route' => '_profiler_search', '_controller' => 'web_profiler.controller.profiler::searchAction'], null, null, null, false, false, null]],
@@ -56,29 +55,31 @@ return [
                             .'|Front/([^/]++)(*:211)'
                         .')'
                         .'|new/([^/]++)(*:232)'
+                        .'|Epreuve/Succes/([^/]++)(*:263)'
                         .'|([^/]++)(?'
-                            .'|(*:251)'
+                            .'|(*:282)'
                             .'|/(?'
-                                .'|takequiz(*:271)'
-                                .'|edit(*:283)'
+                                .'|takequiz(*:302)'
+                                .'|edit(*:314)'
                             .')'
-                            .'|(*:292)'
                         .')'
+                        .'|Epreuve/pdf/([^/]++)(*:344)'
+                        .'|([^/]++)(*:360)'
                     .')'
                 .')'
                 .'|/_(?'
-                    .'|error/(\\d+)(?:\\.([^/]++))?(*:334)'
-                    .'|wdt/([^/]++)(*:354)'
+                    .'|error/(\\d+)(?:\\.([^/]++))?(*:401)'
+                    .'|wdt/([^/]++)(*:421)'
                     .'|profiler/([^/]++)(?'
                         .'|/(?'
-                            .'|search/results(*:400)'
-                            .'|router(*:414)'
+                            .'|search/results(*:467)'
+                            .'|router(*:481)'
                             .'|exception(?'
-                                .'|(*:434)'
-                                .'|\\.css(*:447)'
+                                .'|(*:501)'
+                                .'|\\.css(*:514)'
                             .')'
                         .')'
-                        .'|(*:457)'
+                        .'|(*:524)'
                     .')'
                 .')'
             .')/?$}sDu',
@@ -98,17 +99,19 @@ return [
         189 => [[['_route' => 'app_quiz_index', '_controller' => 'App\\Controller\\QuizController::index'], ['id'], ['GET' => 0], null, false, true, null]],
         211 => [[['_route' => 'app_quiz_index_front', '_controller' => 'App\\Controller\\QuizController::indexFront'], ['id'], ['GET' => 0], null, false, true, null]],
         232 => [[['_route' => 'app_quiz_new', '_controller' => 'App\\Controller\\QuizController::new'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        251 => [[['_route' => 'app_quiz_show', '_controller' => 'App\\Controller\\QuizController::show'], ['id'], ['GET' => 0], null, false, true, null]],
-        271 => [[['_route' => 'app_quiz_display', '_controller' => 'App\\Controller\\QuizController::DisplayFront'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        283 => [[['_route' => 'app_quiz_edit', '_controller' => 'App\\Controller\\QuizController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        292 => [[['_route' => 'app_quiz_delete', '_controller' => 'App\\Controller\\QuizController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
-        334 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-        354 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
-        400 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
-        414 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
-        434 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
-        447 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
-        457 => [
+        263 => [[['_route' => 'app_quiz_succes', '_controller' => 'App\\Controller\\QuizController::Succes'], ['id'], ['GET' => 0], null, false, true, null]],
+        282 => [[['_route' => 'app_quiz_show', '_controller' => 'App\\Controller\\QuizController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        302 => [[['_route' => 'app_quiz_display', '_controller' => 'App\\Controller\\QuizController::DisplayFront'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        314 => [[['_route' => 'app_quiz_edit', '_controller' => 'App\\Controller\\QuizController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        344 => [[['_route' => 'app_pdf_epreuve', '_controller' => 'App\\Controller\\QuizController::pdfEpreuve'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        360 => [[['_route' => 'app_quiz_delete', '_controller' => 'App\\Controller\\QuizController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        401 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
+        421 => [[['_route' => '_wdt', '_controller' => 'web_profiler.controller.profiler::toolbarAction'], ['token'], null, null, false, true, null]],
+        467 => [[['_route' => '_profiler_search_results', '_controller' => 'web_profiler.controller.profiler::searchResultsAction'], ['token'], null, null, false, false, null]],
+        481 => [[['_route' => '_profiler_router', '_controller' => 'web_profiler.controller.router::panelAction'], ['token'], null, null, false, false, null]],
+        501 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
+        514 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
+        524 => [
             [['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
