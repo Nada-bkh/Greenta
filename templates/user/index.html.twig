@@ -31,7 +31,7 @@
                                         <th scope="col">Role</th>
                                         <th scope="col">status</th>
                                         <th scope="col">Phone</th>
-                                        <th scope="col">actions</th>
+                                        <th scope="col">Actions</th>
                                         <th scope="col">BAN</th>
                                     </tr>
                                     </thead>
@@ -60,15 +60,15 @@
                                             </td>
                                             <td>{{ user.phone }}</td>
                                             <td>
-                                                <a class="btn" ,
+                                                <a class="btn"
                                                    onclick="return confirm('Are you sure you want to delete this user?')">{{ include('user/_delete_form.html.twig') }}</a>
 
                                             </td>
                                             <td>
                                                 {% if not user.isBanned %}
-                                                    <a href="{{ path('app_back_user_ban', {'id': user.id}) }}">Ban</a>
+                                                    <a type="button" class="btn btn-danger" id="confirmBanBtn" href="{{ path('app_back_user_ban', {'id': user.id}) }}">Ban</a>
                                                 {% else %}
-                                                    <a href="{{ path('app_back_user_unban', {'id': user.id}) }}">Unban</a>
+                                                    <a type="button" class="btn btn-secondary" data-dismiss="modal" href="{{ path('app_back_user_unban', {'id': user.id}) }}">Unban</a>
                                                 {% endif %}
                                             </td>
                                         </tr>

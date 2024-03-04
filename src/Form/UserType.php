@@ -10,9 +10,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
@@ -49,12 +46,6 @@ class UserType extends AbstractType
                         'message' => 'Email address invalid!',
                     ]),
                 ],
-            ])
-            ->add('isActive', CheckboxType::class, [
-                'label' => 'Appear Online',
-                'required' => false,
-
-
             ])
             ->add('phone', null, [
                 'constraints' => [
@@ -100,23 +91,7 @@ class UserType extends AbstractType
             ->add('captcha', Recaptcha3Type::class, [
                 'constraints' => new Recaptcha3(),
                 'action_name' => 'app_home',
-            ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
-
-    }
-
-    public function onPreSubmit(FormEvent $event)
-    {
-        $data = $event->getData();
-        $email = $data['email'];
-
-        // Check if the email is associated with a banned user
-        $userRepository = $this->entityManager->getRepository(User::class);
-        $bannedUser = $userRepository->findOneBy(['email' => $email, 'isBanned' => true]);
-
-        if ($bannedUser) {
-            $event->getForm()->addError(new FormError('This email is associated with a banned user.'));
-        }
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
