@@ -41,6 +41,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/ban-user, roles: ROLE_ADMIN }
+        - { path: ^/unban-user, roles: ROLE_ADMIN }
 
 when@test:
     security:

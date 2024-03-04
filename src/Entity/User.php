@@ -39,11 +39,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $phone = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Feedback $feedback = null;
+    #[ORM\Column(type: 'boolean')]
+    private $isActive = true;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private $isBanned = false;
 
     public function getId(): ?int
     {
@@ -183,26 +183,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFeedback(): ?Feedback
+    public function isActive(): bool
     {
-        return $this->feedback;
+        return $this->isActive;
     }
 
-    public function setFeedback(?Feedback $feedback): static
+    public function setIsActive(bool $isActive): static
     {
-        $this->feedback = $feedback;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
-    public function isVerified(): bool
+    public function isBanned(): bool
     {
-        return $this->isVerified;
+        return $this->isBanned;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsBanned(bool $isBanned): static
     {
-        $this->isVerified = $isVerified;
+        $this->isBanned = $isBanned;
 
         return $this;
     }

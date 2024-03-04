@@ -10,6 +10,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -29,7 +30,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $managerRegistry): Response
+    public function new(Request $request,UserPasswordHasherInterface $userPasswordHasher, ManagerRegistry $managerRegistry, UserRepository $userRepository): Response
     {
 
         $user = new User();
@@ -51,6 +52,13 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+
+        $existingUser = $userRepository->findOneBy(['email' => $user->getEmail(), 'isBanned' => true]);
+
+        if ($existingUser) {
+            $this->addFlash('danger', 'This email address is associated with a banned account.');
+            return $this->redirectToRoute('app_user_new'); // Redirect to the registration page or any other page
         }
 
         return $this->renderForm('user/_form.html.twig', [
@@ -116,5 +124,22 @@ class UserController extends AbstractController
         $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/toggle-online-status', name: 'toggle_online_status', methods: ['POST'])]
+    public function toggleOnlineStatus(Request $request, EntityManagerInterface $entityManager)
+    {
+        // Retrieve the current user
+        $user = $this->getUser();
+
+        // Toggle the isActive status
+        $user->setIsActive(!$user->isActive());
+
+        // Save the changes to the database
+        $entityManager->flush();
+
+        // Return a JSON response or any other response as needed
+        return new JsonResponse(['success' => true]);
+
     }
 }

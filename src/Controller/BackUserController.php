@@ -89,6 +89,26 @@ class BackUserController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_back_user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/ban-user/{id}', name: 'app_back_user_ban', methods: ['GET'])]
+    public function banUser(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager):Response
+    {
+        $user = $userRepository->find($id);
+        $user->setIsBanned(true);
+        $entityManager->flush();
+
+       return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/unban-user/{id}', name: 'app_back_user_unban')]
+    public function unbanUser(int $id, UserRepository $userRepository, EntityManagerInterface $entityManager):Response
+    {
+        $user = $userRepository->find($id);
+        $user->setIsBanned(false);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

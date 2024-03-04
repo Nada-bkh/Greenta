@@ -13,7 +13,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap"
+          rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -29,10 +30,22 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    {# JavaScript Libraries #}
+    <script src="{{ asset('assets/lib/jquery-3.7.1.js') }}"></script>
+    <script src="{{ asset('assets/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/parallax/parallax.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
+
+    {# Template Javascript #}
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
 <body>
-
-
 
 <!-- Topbar Start -->
 <div class="container-fluid bg-dark text-light px-0 py-2">
@@ -60,7 +73,6 @@
 </div>
 <!-- Topbar End -->
 
-
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
     <a href="{{ path('app_home') }}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
@@ -69,34 +81,83 @@
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{ path('app_acceuil') }}" class="nav-item nav-link active">Home</a>
-            <a href="about.html" class="nav-item nav-link">Shop</a>
-            <a href="service.html" class="nav-item nav-link">Events</a>
-            <a href="project.html" class="nav-item nav-link">Projects</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Educational</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="" class="dropdown-item">Courses</a>
-                    <a href="" class="dropdown-item">Online Lessons</a>
-                    <a href="" class="dropdown-item">Podcasts</a>
-                    <a href="" class="dropdown-item">Comments</a>
-                </div>
-            </div>
-            <a href="" class="nav-item nav-link">Charity</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}" class="dropdown-item">Profile Settings</a>
-                    <a href="" class="dropdown-item">Feedback</a>
-                    <a href="{{ path('app_home') }}" class="dropdown-item">Log out</a>
-                </div>
-            </div>
 
+    <form id="online-status-form" name="user" method="post" action="{{ path('toggle_online_status') }}">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{{ path('app_acceuil') }}" class="nav-item nav-link active">Home</a>
+                <a href="about.html" class="nav-  nav-link">Shop</a>
+                <a href="service.html" class="nav-item nav-link">Events</a>
+                <a href="project.html" class="nav-item nav-link">Projects</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Educational</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <a href="" class="dropdown-item">Courses</a>
+                        <a href="" class="dropdown-item">Online Lessons</a>
+                        <a href="" class="dropdown-item">Podcasts</a>
+                        <a href="" class="dropdown-item">Comments</a>
+                    </div>
+                </div>
+                <a href="" class="nav-item nav-link">Charity</a>
+
+                <!--user navbar-->
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle"
+                       data-bs-toggle="dropdown">
+                        {% set userName = user.firstname | default('User') %}
+                        {{ user.firstname | capitalize }}
+                    </a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <li class="dropdown-header">
+                            <h6>{{ user.firstname | capitalize }}</h6>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="statusToggle" name="user[isActive]"
+                                       {% if user.isActive %}checked{% endif %}>
+                                <label class="form-check-label" for="user_isActive">
+                                    {% if user.isActive %}
+                                        Online
+                                    {% else %}
+                                        Offline
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}" class="dropdown-item">Profile
+                            Settings</a>
+                        <a href="{{ path('app_home') }}" class="dropdown-item">Log out</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
 </nav>
+<!--user navbar end-->
+<script>
+    $(document).ready(function () {
+
+        $('#statusToggle').click(function () {
+            /*const xhr = new XMLHttpRequest();
+            xhr.open("POST", '{{ path('toggle_online_status') }}');
+            xhr.send();*/
+            // Send AJAX request to the Symfony controller
+            $.ajax({
+                type: 'POST',
+                url: '{{ path('toggle_online_status') }}', // Replace with the actual route name
+                success: function (response) {
+                    // Refresh the page after successful toggle
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error toggling online status:', error);
+                }
+            });
+        });
+    });
+</script>
+
 <!-- Navbar End -->
 {% block body %}
 {% endblock body %}
@@ -110,10 +171,14 @@
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+216 12345678</p>
                 <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@greenta.com</p>
                 <div class="d-flex pt-2">
-                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
+                                class="fab fa-twitter"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
+                                class="fab fa-youtube"></i></a>
+                    <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -126,8 +191,10 @@
                 <h4 class="text-white mb-4">Feedback</h4>
                 <p>Give us your feedback !</p>
                 <div class="position-relative w-100">
-                    <input class="form-control bg-light border-light w-100 py-3 ps-4 pe-5" type="text" placeholder="Your message">
-                    <a type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2" href="{{ path('app_login') }}">Send</a>
+                    <input class="form-control bg-light border-light w-100 py-3 ps-4 pe-5" type="text"
+                           placeholder="Your message">
+                    <a type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
+                       href="{{ path('app_login') }}">Send</a>
                 </div>
             </div>
         </div>
@@ -135,20 +202,5 @@
 </div>
 <!-- Footer End -->
 </body>
-{# JavaScript Libraries #}
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="{{ asset('assets/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
-<script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
-<script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
-<script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('assets/lib/counterup/counterup.min.js') }}"></script>
-<script src="{{ asset('assets/lib/parallax/parallax.min.js') }}"></script>
-<script src="{{ asset('assets/lib/isotope/isotope.pkgd.min.js') }}"></script>
-<script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
 
-{# Template Javascript #}
-<script src="{{ asset('assets/js/main.js') }}"></script>
-
-</head>
 </html>
