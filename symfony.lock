@@ -17,24 +17,12 @@
             "repo": "github.com/symfony/recipes",
             "branch": "main",
             "version": "2.4",
-            "ref": "191046a1fdd1a58fcca48d8bf2f58c45a93b1d00"
+            "ref": "cc62b7e9470998c640ee99d284a013a676f1fc5e"
         },
         "files": [
             "./config/packages/doctrine.yaml",
             "./src/Entity/.gitignore",
             "./src/Repository/.gitignore"
-        ]
-    },
-    "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "3.0",
-            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
-        },
-        "files": [
-            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -229,7 +217,7 @@
         ]
     },
     "symfony/stimulus-bundle": {
-        "version": "2.14",
+        "version": "2.15",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -269,7 +257,7 @@
         ]
     },
     "symfony/ux-turbo": {
-        "version": "v2.14.0"
+        "version": "v2.15.0"
     },
     "symfony/validator": {
         "version": "5.4",
@@ -295,9 +283,6 @@
             "./config/packages/web_profiler.yaml",
             "./config/routes/web_profiler.yaml"
         ]
-    },
-    "symfonycasts/verify-email-bundle": {
-        "version": "v1.16.1"
     },
     "twig/extra-bundle": {
         "version": "v3.8.0"

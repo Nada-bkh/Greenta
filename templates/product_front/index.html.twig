@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product List{% endblock %}
+
+{% block body %}
+
+<br>
+<br>
+<br>
+<br>
+    <h1>Product List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Disponibility</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.productname }}</td>
+                <td>{{ product.productquantity }}</td>
+                <td>{{ product.productsize }}</td>
+                <td>{{ product.productprice }}</td>
+                <td>{{ product.productdescription }}</td>
+                <td>{{ product.productdisponibility }}</td>
+                <td>
+                    <a href="{{ path('app_product_back_show', {'id': product.id}) }}">add to cart</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
