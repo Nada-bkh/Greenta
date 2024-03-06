@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'back/index.html.twig' %}
 
 {% block title %}Application index{% endblock %}
 
@@ -12,7 +12,8 @@
                 <th>Firstname</th>
                 <th>Lastname</th>
                 <th>Email</th>
-                <th>actions</th>
+                <th>PDF</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -22,10 +23,8 @@
                 <td>{{ application.firstname }}</td>
                 <td>{{ application.lastname }}</td>
                 <td>{{ application.email }}</td>
-                <td>
-                    <a href="{{ path('app_application_show', {'id': application.id}) }}">show</a>
-                    <a href="{{ path('app_application_edit', {'id': application.id}) }}">edit</a>
-                </td>
+                <td style="position: relative;"><file src="{{ asset('uploads/' ~ application.pdf) }}"</td>
+                
             </tr>
         {% else %}
             <tr>
@@ -35,5 +34,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_application_new') }}">Create new</a>
 {% endblock %}

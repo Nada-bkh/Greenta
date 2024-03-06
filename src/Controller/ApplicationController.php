@@ -17,6 +17,7 @@ class ApplicationController extends AbstractController
     #[Route('/', name: 'app_application_index', methods: ['GET'])]
     public function index(ApplicationRepository $applicationRepository): Response
     {
+        
         return $this->render('application/index.html.twig', [
             'applications' => $applicationRepository->findAll(),
         ]);
@@ -30,6 +31,20 @@ class ApplicationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $application= $form->getData();
+        
+        if($pdf = $form['pdf']->getData()) {
+            $fileName =md5(uniqid()).'.'.$pdf->guessExtension();
+            $pdf->move($this->getParameter('pdf_dir'), $fileName);
+            
+            $application->setPdf($fileName);
+            
+        } 
+
+
+        
+
+
             $entityManager->persist($application);
             $entityManager->flush();
 

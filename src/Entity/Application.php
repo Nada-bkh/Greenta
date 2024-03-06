@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 class Application
@@ -23,7 +25,10 @@ class Application
     private ?string $email = null;
 
     #[ORM\ManyToOne(inversedBy: 'jobapp')]
-    private ?job $jobtitle = null;
+    private ?Job $jobtitle = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pdf = null;
 
     public function getId(): ?int
     {
@@ -74,6 +79,18 @@ class Application
     public function setJobtitle(?job $jobtitle): static
     {
         $this->jobtitle = $jobtitle;
+
+        return $this;
+    }
+
+    public function getPdf(): ?string
+    {
+        return $this->pdf;
+    }
+
+    public function setPdf(string $pdf): static
+    {
+        $this->pdf = $pdf;
 
         return $this;
     }

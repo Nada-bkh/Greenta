@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Form\Job1Type;
 use App\Repository\JobRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,12 +15,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontJobController extends AbstractController
 {
     #[Route('/', name: 'app_front_job_index', methods: ['GET'])]
-    public function index(JobRepository $jobRepository): Response
+    public function index(JobRepository $jobRepository,PaginatorInterface  $paginator, Request $request): Response
     {
+        $job = $jobRepository->findAll();
+        $pagination = $paginator->paginate(
+            $jobRepository->paginationQuery(), /* query NOT result */
+            $request->query->get('page', 1),
+            4
+        );
+
         return $this->render('front_job/index.html.twig', [
-            'jobs' => $jobRepository->findAll(),
+            'job' => $jobRepository->findAll(),
+            'pagination' => $pagination
         ]);
+        
+      
+        
     }
+
+
+    
+
+
 
     #[Route('/new', name: 'app_front_job_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -30,6 +46,15 @@ class FrontJobController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $job= $form->getData();
+        
+        if($picture = $form['picture']->getData()) {
+            $fileName =md5(uniqid()).'.'.$picture->guessExtension();
+            $picture->move($this->getParameter('photo_dir'), $fileName);
+            
+            $job->setPicture($fileName);
+            
+        } 
             $entityManager->persist($job);
             $entityManager->flush();
 
@@ -50,6 +75,8 @@ class FrontJobController extends AbstractController
         ]);
     }
 
+      
+}
     /*  #[Route('/{id}/edit', name: 'app_front_job_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Job $job, EntityManagerInterface $entityManager): Response
     {
@@ -78,4 +105,3 @@ class FrontJobController extends AbstractController
 
         return $this->redirectToRoute('app_front_job_index', [], Response::HTTP_SEE_OTHER);
     }*/
-}

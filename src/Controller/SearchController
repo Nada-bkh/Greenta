@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\JobRepository;
+
+
+use Symfony\Component\Routing\Attribute\Route;
+
+class SearchController extends AbstractController
+{
+
+    #[Route('/search', name: 'app_search')]
+
+    public function searchJobs(Request $request, JobRepository $jobRepository): JsonResponse
+    {
+        $query = $request->query->get('query');
+        $jobs = $jobRepository->searchJobs($query);
+
+        $results = [];
+        foreach ($jobs as $job) {
+            $results[] = [
+                'id' => $job->getId(),
+                'organisation' => $job->getOrganisation(),
+                'title' => $job->getTitle(),
+            ];
+        }
+
+        return $this->json($results);
+    }
+}
