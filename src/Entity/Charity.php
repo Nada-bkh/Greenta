@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CharityRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\BlobType;
 use Doctrine\ORM\Mapping as ORM;
 use PhpParser\Node\Expr\Cast\Double;
@@ -38,6 +40,20 @@ class Charity
 
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
+
+    #[ORM\ManyToMany(targetEntity: Donation::class, inversedBy: 'charities')]
+    private Collection $donation;
+
+    #[ORM\Column(length: 255)]
+    private ?string $location = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $search_keyword = null;
+
+    public function __construct()
+    {
+        $this->donation = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -102,5 +118,53 @@ class Charity
     public function __toString()
     {
         return $this->name_of_charity;
+    }
+
+    /**
+     * @return Collection<int, Donation>
+     */
+    public function getDonation(): Collection
+    {
+        return $this->donation;
+    }
+
+    public function addDonation(Donation $donation): static
+    {
+        if (!$this->donation->contains($donation)) {
+            $this->donation->add($donation);
+        }
+
+        return $this;
+    }
+
+    public function removeDonation(Donation $donation): static
+    {
+        $this->donation->removeElement($donation);
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): static
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getSearchKeyword(): ?string
+    {
+        return $this->search_keyword;
+    }
+
+    public function setSearchKeyword(string $search_keyword): static
+    {
+        $this->search_keyword = $search_keyword;
+
+        return $this;
     }
 }

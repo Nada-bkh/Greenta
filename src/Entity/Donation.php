@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\DonationRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Float_;
 use PhpParser\Node\Expr\Cast\Double;
@@ -40,9 +42,20 @@ class Donation
     #[ORM\Column]
     private ?float $amount;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Charity $charity = null;
+    #[ORM\ManyToMany(targetEntity: Charity::class, mappedBy: 'donation')]
+    private Collection $charities;
+    /** @var string|null */
+    public $email;
+
+    /** @var string|null */
+    public $captcha;
+
+    public function __construct()
+    {
+        $this->charities = new ArrayCollection();
+    }
+
+
 
 
 
@@ -114,14 +127,14 @@ class Donation
         return $this;
     }
 
-    public function getCharity(): ?Charity
+    public function getCharity(): Collection
     {
-        return $this->charity;
+        return $this->charities;
     }
 
     public function setCharity(Charity $charity): static
     {
-        $this->charity = $charity;
+        $this->charities = $charity;
 
         return $this;
     }
@@ -139,6 +152,33 @@ class Donation
     }
     public function __toString()
     {
-        return $this->charity;
+        return $this->charities;
+    }
+
+    /**
+     * @return Collection<int, Charity>
+     */
+    public function getCharities(): Collection
+    {
+        return $this->charities;
+    }
+
+    public function addCharity(Charity $charity): static
+    {
+        if (!$this->charities->contains($charity)) {
+            $this->charities->add($charity);
+            $charity->addDonation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharity(Charity $charity): static
+    {
+        if ($this->charities->removeElement($charity)) {
+            $charity->removeDonation($this);
+        }
+
+        return $this;
     }
 }

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Config\Framework\AssetsConfig;
+
 
 #[Route('/donation/back')]
 class DonationBackController extends AbstractController
@@ -41,13 +43,13 @@ class DonationBackController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/{id}', name: 'app_donation_back_show', methods: ['GET'])]
+    /* #[Route('/{id}', name: 'app_donation_back_show', methods: ['GET'])]
     public function show(Donation $donation): Response
     {
         return $this->render('donation_back/show.html.twig', [
             'donation' => $donation,
         ]);
-    }
+    }*/
 
     #[Route('/{id}/edit', name: 'app_donation_back_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Donation $donation, EntityManagerInterface $entityManager): Response
@@ -76,5 +78,41 @@ class DonationBackController extends AbstractController
         }
 
         return $this->redirectToRoute('app_donation_back_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/stat', name: 'app_donation_back_stat', methods: ['POST', 'GET'])]
+    public function stat(EntityManagerInterface $entityManager): Response
+    {
+        // Retrieve all donations
+        $donations = $entityManager->getRepository(Donation::class)->findAll();
+
+        // Initialize an array to store the count of donations for each charity
+        $charityDonationCounts = [];
+
+
+
+        // Count the number of donations for each charity
+        foreach ($donations as $donation) {
+            $charities = $donation->getCharities(); // Use getCharities instead of getCharity
+            foreach ($charities as $charity) {
+                $charityName = $charity->getNameOfCharity();
+
+
+                if (!isset($charityDonationCounts[$charityName])) {
+                    $charityDonationCounts[$charityName] = 0;
+                }
+                $charityDonationCounts[$charityName]++;
+            }
+        }
+
+        // Extract the values from the associative array
+        $charityDonationCountsValues = array_values($charityDonationCounts);
+
+
+        // Pass the donation counts to the Twig template
+        return $this->render('donation/stat.html.twig', [
+            'charityDonationCountsValues' => $charityDonationCountsValues,
+            'charityDonationCounts' => $charityDonationCounts, // Optional: You can also pass the associative array for debugging
+        ]);
     }
 }

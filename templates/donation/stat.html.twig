@@ -1,0 +1,56 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Donation Statistics
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+
+	<canvas id="donationsCharts" style="max-height: 400px;"></canvas>
+
+
+	{# Debugging charityDonationCountsValues #}
+	<pre>{{ dump(charityDonationCountsValues) }}</pre>
+
+	{# Debugging charityDonationCounts #}
+	<pre>{{ dump(charityDonationCounts) }}</pre>
+
+	{% block javascript %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" crossorigin="anonymous"></script>
+
+		<script>
+			// Extract keys (charities) and values (donation counts) from charityDonationCounts
+const charities = {{ charityDonationCounts|keys|json_encode|raw }};
+const donations = {{ charityDonationCounts|json_encode|raw }};
+let donationsChart = new Chart('donationsCharts', {
+type: 'bar',
+data: {
+labels: charities,
+datasets: [
+{
+label: '# of donations',
+data: donations,
+borderWidth: 1,
+backgroundColor: 'rgba(75, 192, 192, 0.2)',
+borderColor: 'rgb(75, 192, 192)'
+}
+]
+},
+options: {
+scales: {
+yAxes: [
+{
+ticks: {
+beginAtZero: true
+}
+}
+]
+}
+}
+});
+		</script>
+	{% endblock %}
+{% endblock %}

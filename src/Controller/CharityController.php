@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Psr\Log\LoggerInterface;
 
 #[Route('/charity')]
 class CharityController extends AbstractController
@@ -69,13 +71,26 @@ class CharityController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_charity_show', methods: ['GET'])]
+    /*   #[Route('/{id}', name: 'app_charity_show', methods: ['GET'])]
     public function show(Charity $charity): Response
     {
         return $this->render('charity/show.html.twig', [
             'charity' => $charity,
         ]);
+    }*/
+
+
+    #[Route('charity/{id}', name: 'app_charity_show', methods: ['GET'])]
+    public function show(Request $request, EntityManagerInterface $entityManager, Charity $charities): Response
+    {
+        dump($charities);
+
+        return $this->render('charity/showBack.html.twig', [
+            'charity' => $charities,
+        ]);
     }
+
+
 
 
 
@@ -111,5 +126,56 @@ class CharityController extends AbstractController
         }
 
         return $this->redirectToRoute('app_charity_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /* #[Route('search', name: 'app_charity_search', methods: ['GET'])]
+
+    public function searchByName(Request $request, CharityRepository $charityRepository, LoggerInterface $logger): JsonResponse
+    {
+        // Retrieve the 'name_of_charity' parameter from the request query string
+        $name = $request->query->get('name_of_charity');
+
+        // Log the search query
+        $logger->info('Search query received: ' . $name);
+
+        // Search for charities by name using the CharityRepository
+        $charities = $charityRepository->findBy(['name_of_charity' => $name]);
+
+        // Log the number of charities found
+        $logger->info('Number of charities found: ' . count($charities));
+
+        // Initialize an array to hold the formatted results
+        $results = [];
+
+        // Loop through the retrieved charities and format the data
+        foreach ($charities as $charity) {
+            $results[] = [
+                'id' => $charity->getId(),
+                'name_of_charity' => $charity->getNameOfCharity(),
+                'amount_donated' => $charity->getAmountDonated(),
+                'picture' => $charity->getPicture(),
+                'last_date' => $charity->getLastDate(),
+            ];
+        }
+
+        // Return a JSON response with the formatted results
+        return $this->json($results);
+    }*/
+    #[Route('/search', name: 'app_charity_search', methods: ['GET'])]
+    public function search(Request $request, CharityRepository $repo): Response
+    {
+        // Get the search query from the request
+        $query = $request->query->get('keyword');
+        $results = [];
+
+        if ($query !== null) {
+            // Call the searchByName() method with the query
+            $results = $repo->searchByName($query);
+        }
+
+        // Render the search results template
+        return $this->render('charity/search_results.html.twig', [
+            'query' => $query,
+            'results' => $results,
+        ]);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Donation;
 use Doctrine\DBAL\Types\TextType;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -39,10 +41,16 @@ class DonationType extends AbstractType
                 ]
             ])
 
-            ->add('charity')
+
             ->add('save', SubmitType::class, [
                 'label' => 'Donate', // This sets the label for the submit button
                 'attr' => ['class' => 'btn btn-primary py-3 px-4']
+            ])
+            ->add('captcha', Recaptcha3Type::class, [
+                'constraints' => new Recaptcha3(),
+                'action_name' => 'homepage',
+                'constraints' => new Recaptcha3(['message' => 'There were problems with your captcha. Please try again or contact with support and provide following code(s): {{ errorCodes }}']),
+                'locale' => 'de',
             ]);
     }
 

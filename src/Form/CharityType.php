@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,6 +32,15 @@ class CharityType extends AbstractType
                     new Regex([
                         'pattern' => '/^[a-zA-Z\s]+$/',
                         'message' => 'The name of the charity must contain only alphabetic characters.',
+                    ]),
+                ],
+            ])
+            ->add('location', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z\s]+$/',
+                        'message' => 'The location of the charity must contain only alphabetic characters.',
                     ]),
                 ],
             ])

@@ -49,9 +49,10 @@
 				<!-- End Logo -->
 
 
+				<!-- Search Bar -->
 				<div class="search-bar">
-					<form class="search-form d-flex align-items-center" method="POST" action="#">
-						<input type="text" name="query" placeholder="Search" title="Enter search keyword">
+					<form class="search-form d-flex align-items-center" method="GET" action="{{ path('app_charity_search') }}">
+						<input type="text" name="keyword" placeholder="Search" title="Enter search keyword">
 						<button type="submit" title="Search">
 							<i class="bi bi-search"></i>
 						</button>
@@ -314,7 +315,7 @@
 	<i class="bi bi-circle"></i>
 	<span>Sellings</span>
 </a></li></ul></li><!-- End Tables Nav --><li class="nav-item"><a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#"><i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i></a><ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav"><li>
-<a href="charts-chartjs.html">
+<a href="https://127.0.0.1:8000//donation/back/stat">
 	<i class="bi bi-circle"></i>
 	<span>Charities</span>
 </a></li><li>

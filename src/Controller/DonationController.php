@@ -8,6 +8,7 @@ use App\Form\Donation1Type;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class DonationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Recaptcha3Validator $recaptcha3Validator): Response
     {
         $donation = new Donation();
         $donation->setDate(new \DateTime()); // Set the current date and time
@@ -36,6 +37,7 @@ class DonationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $score = $recaptcha3Validator->getLastResponse()->getScore();
             $selectedCharity = $donation->getCharity(); // Retrieve the selected charity from the donation entity
 
             // Check if a valid charity is selected
