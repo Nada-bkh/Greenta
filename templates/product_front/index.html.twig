@@ -19,6 +19,7 @@
                 <th>Size</th>
                 <th>Price</th>
                 <th>Description</th>
+                <th>image</th>
                 <th>Disponibility</th>
                 <th>Actions</th>
             </tr>
@@ -32,6 +33,7 @@
                 <td>{{ product.productsize }}</td>
                 <td>{{ product.productprice }}</td>
                 <td>{{ product.productdescription }}</td>
+                <td>{{ product.productimg }}</td>
                 <td>{{ product.productdisponibility }}</td>
                 <td>
                     <a href="{{ path('app_product_back_show', {'id': product.id}) }}">add to cart</a>

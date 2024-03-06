@@ -26,6 +26,7 @@ class ProductType extends AbstractType
 ])
             ->add('productprice')
             ->add('productdescription')
+            ->add('productimg')
             ->add('productdisponibility', null, [
                 'label' => 'Disponibility',
                 'required' => false, // Make it optional

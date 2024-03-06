@@ -60,8 +60,17 @@ class Product
     #[Assert\Length(min:10)]
     #[Assert\Length(max:150)]
 
+    
+
     #[ORM\Column(length: 255)]
     private ?string $productdescription = null;
+
+    #[Assert\NotBlank (message:"veuillez saisir une description du produit")]
+    #[Assert\Length(min:10)]
+    #[Assert\Length(max:150)]
+
+    #[ORM\Column(length: 255)]
+    private ?string $productimg = null;
 
 
 
@@ -148,4 +157,18 @@ class Product
 
         return $this;
     }
+
+    public function getProductimg(): ?string
+    {
+        return $this->productimg;
+    }
+
+    public function setProductimg(string $productimg): static
+    {
+        $this->productimg = $productimg;
+
+        return $this;
+    }
+
+
 }

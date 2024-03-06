@@ -18,6 +18,8 @@
                 <th>Size</th>
                 <th>Price</th>
                 <th>Description</th>
+                <th>Image</th>
+
                 <th>Disponibility</th>
                 <th>Actions</th>
             </tr>
@@ -31,6 +33,7 @@
                 <td>{{ product.productsize }}</td>
                 <td>{{ product.productprice }}</td>
                 <td>{{ product.productdescription }}</td>
+                <td>{{ product.productimg }}</td>
                 <td>{{ product.productdisponibility }}</td>
                 <td>
                     <a href="{{ path('app_product_back_show', {'id': product.id}) }}">show</a>
@@ -45,17 +48,9 @@
         </tbody>
     </table>
 
+    <a class="btn-succes" 
+  href="{{ path('app_product_back_new') }}" >Create new</a>
 </div>
- <button class="btn-succes" style="margin-left:350px;margin-top:35px;
- border: 2px solid black;
-  background-color: white;
-  color: black;
-  font-size: 16px;
-  padding: 14px 28px;
-  cursor: pointer;
-  border-color: #04AA6D;
-  color: green;
-  border-radius: 5px;" 
-  href="{{ path('app_product_back_new') }}" >Create new</button>
+ 
     
 {% endblock %}
