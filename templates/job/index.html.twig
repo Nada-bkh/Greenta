@@ -1,0 +1,38 @@
+{% extends 'home.html.twig' %}
+
+{% block title %}Job index{% endblock %}
+
+{% block body %}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-bold text-primary">Our Opportunities</p>
+            <h1 class="display-5 mb-5">Jobs That We Offer For You</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item rounded d-flex h-100">
+                    <div class="service-img rounded">
+                        {% for job in jobs %}
+                        <img class="img-fluid" src="{{ asset('uploads/' ~ job.picture) }}" alt="">
+                    </div>
+                    <div class="service-text rounded p-5">
+                        <div class="btn-square rounded-circle mx-auto mb-3">
+                            <img class="img-fluid" src="{{ asset('uploads/' ~ job.picture) }}" alt="Icon">
+                        </div>
+                        <h4 class="mb-3">{{ job.title }}</h4>
+                        <p class="mb-4">{{ job.description }}</p>
+                        <a class="btn btn-sm" href="{{ path('app_job_show', {'id': job.id}) }}"><i class="fa fa-plus text-primary me-2"></i>Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

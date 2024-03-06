@@ -76,19 +76,17 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="{{ path('app_home') }}" class="nav-item nav-link active">Home</a>
-            <a href="about.html" class="nav-item nav-link">Shop</a>
+            <a href="" class="nav-item nav-link">Shop</a>
             <a href="service.html" class="nav-item nav-link">Events</a>
             <a href="project.html" class="nav-item nav-link">Projects</a>
+            <a href="{{ path('app_charity_front_index') }}" class="nav-item nav-link">Charity</a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Educational</a>
                 <div class="dropdown-menu bg-light m-0">
-                    <a href="feature.html" class="dropdown-item">Courses</a>
-                    <a href="quote.html" class="dropdown-item">Online Lessons</a>
-                    <a href="team.html" class="dropdown-item">Podcasts</a>
-                    <a href="testimonial.html" class="dropdown-item">Comments</a>
+                        <a href="{{ path ('app_cour_index')}}" class="dropdown-item">Courses</a>
+                  
                 </div>
             </div>
-            <a href="contact.html" class="nav-item nav-link">Charity</a>
         </div>
         <a href="{{ path('app_login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign in<i class="fa fa-arrow-right ms-3"></i></a>
     </div>
